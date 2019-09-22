@@ -1,5 +1,9 @@
 var Product = require('../models/product');
 
+var mongoose = require('mongoose');
+
+mongoose.connect('localhost:27017/shopping');
+
 var products = [
     new Product({
         imagePath: 'https://www.adidas.com.ph/dw/image/v2/bcbs_prd/on/demandware.static/-/Sites-adidas-products/default/dwc78be248/zoom/C77124_01_standard.jpg?sh=600&strip=false&sw=600',
@@ -42,4 +46,37 @@ var products = [
         description:'Nike cortez',
         price: 20
     })
-] 
+];
+
+var done = 0;
+for(var i=0; i<products.length;i++){
+    products[i].save(function(err, result){
+        done++;
+        if(done===products.length){
+           exit();
+        }
+    });
+}
+
+function exit(){
+    mongoose.disconnect();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
